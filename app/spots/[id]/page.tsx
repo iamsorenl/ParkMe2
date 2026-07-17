@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sql } from "@/lib/db";
-import SpotMap, { priceLabel, type Spot } from "@/components/SpotMap";
+import SpotMap, { type Spot } from "@/components/SpotMap";
+import { priceLabel } from "@/lib/price";
 
 export const dynamic = "force-dynamic";
 

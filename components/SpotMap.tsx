@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
+import { priceLabel } from "@/lib/price";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -21,10 +22,6 @@ export type Spot = {
   lng: number;
 };
 
-export const priceLabel = (spot: Pick<Spot, "price_rate" | "price_unit">) =>
-  Number(spot.price_rate) === 0
-    ? "Free"
-    : `$${spot.price_rate}/${spot.price_unit === "day" ? "day" : "hr"}`;
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
