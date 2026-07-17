@@ -13,4 +13,6 @@ Then open http://localhost:3000.
 
 ## Live
 
-Deployed on Vercel: (URL TBD — connect repo in Vercel dashboard)
+Deployed on Vercel: https://park-me2.vercel.app
+
+Deploys automatically on push to `main` (via the [iamsorenl/ParkMe2](https://github.com/iamsorenl/ParkMe2) mirror — `git push` updates both remotes).
