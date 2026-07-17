@@ -10,7 +10,8 @@ for (const stmt of schema.split(";").map((s) => s.trim()).filter(Boolean)) {
 
 // Real public parking in Santa Cruz, CA. Rates verified against city sources
 // (santacruzca.gov parking pages, beachboardwalk.com) as of 2026-07.
-// price_rate is $/hr; 0 = free. owner_id stays NULL = public default, not user-editable.
+// price_rate is $ per price_unit ('hour' default, or 'day' for flat-rate lots); 0 = free.
+// owner_id stays NULL = public default, not user-editable.
 const spots = [
   {
     name: "Soquel/Front Parking Garage",
@@ -105,18 +106,19 @@ const spots = [
   {
     name: "Santa Cruz Beach Boardwalk Main Parking Lot",
     description:
-      "Large open-air lot on Beach Street directly across from the Boardwalk and Main Beach, opening 6am daily; no in-and-out privileges, no overnight parking. Flat-rate $25-35/day in summer (~$3/hr equivalent).",
+      "Large open-air lot on Beach Street directly across from the Boardwalk and Main Beach, opening 6am daily; no in-and-out privileges, no overnight parking. Flat daily rate; $25 summer weekdays, $35 summer weekends/holidays, less off-season.",
     addr: "400 Beach St",
     lat: 36.965276,
     lng: -122.019321,
-    price_rate: 3,
+    price_rate: 25,
+    price_unit: "day",
   },
 ];
 
 for (const s of spots) {
   await sql`
-    INSERT INTO spot (name, description, addr, zipcode, locality, region, country, lat, lng, price_rate)
-    VALUES (${s.name}, ${s.description}, ${s.addr}, '95060', 'Santa Cruz', 'California', 'US', ${s.lat}, ${s.lng}, ${s.price_rate})
+    INSERT INTO spot (name, description, addr, zipcode, locality, region, country, lat, lng, price_rate, price_unit)
+    VALUES (${s.name}, ${s.description}, ${s.addr}, '95060', 'Santa Cruz', 'California', 'US', ${s.lat}, ${s.lng}, ${s.price_rate}, ${s.price_unit ?? "hour"})
   `;
 }
 

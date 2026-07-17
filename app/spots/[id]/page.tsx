@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sql } from "@/lib/db";
-import SpotMap, { type Spot } from "@/components/SpotMap";
+import SpotMap, { priceLabel, type Spot } from "@/components/SpotMap";
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +69,7 @@ export default async function SpotPage({
       <p>{address}</p>
       <p>{availability}</p>
       <p>
-        <strong>${spot.price_rate}/hr</strong>
+        <strong>{priceLabel(spot)}</strong>
       </p>
       <div style={{ height: "20rem" }}>
         <SpotMap center={[spot.lat, spot.lng]} zoom={16} spots={[spot]} />

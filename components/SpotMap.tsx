@@ -16,9 +16,15 @@ export type Spot = {
   addr: string | null;
   locality: string | null;
   price_rate: string;
+  price_unit: "hour" | "day";
   lat: number;
   lng: number;
 };
+
+export const priceLabel = (spot: Pick<Spot, "price_rate" | "price_unit">) =>
+  Number(spot.price_rate) === 0
+    ? "Free"
+    : `$${spot.price_rate}/${spot.price_unit === "day" ? "day" : "hr"}`;
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -68,7 +74,7 @@ export default function SpotMap({
           .bindPopup(
             `<strong>${esc(spot.name)}</strong><br>` +
               `${esc([spot.addr, spot.locality].filter(Boolean).join(", "))}<br>` +
-              `$${esc(spot.price_rate)}/hr<br>` +
+              `${esc(priceLabel(spot))}<br>` +
               `<a href="/spots/${encodeURIComponent(spot.id)}">View spot</a>`
           );
       }

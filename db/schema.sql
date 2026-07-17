@@ -12,6 +12,7 @@ CREATE TABLE spot (
   lat DOUBLE PRECISION NOT NULL,
   lng DOUBLE PRECISION NOT NULL,
   price_rate NUMERIC NOT NULL,
+  price_unit TEXT NOT NULL DEFAULT 'hour' CHECK (price_unit IN ('hour', 'day')),
   available_start TIMESTAMPTZ,
   available_end TIMESTAMPTZ,
   owner_id UUID

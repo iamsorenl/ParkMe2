@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const spots = (await sql`
-    SELECT id, name, addr, locality, price_rate, lat, lng FROM spot ORDER BY name
+    SELECT id, name, addr, locality, price_rate, price_unit, lat, lng FROM spot ORDER BY name
   `) as Spot[];
 
   return (
