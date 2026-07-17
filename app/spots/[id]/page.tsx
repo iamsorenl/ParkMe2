@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sql } from "@/lib/db";
+import { getUserId } from "@/lib/auth";
 import SpotMap, { type Spot } from "@/components/SpotMap";
 import Header from "@/components/Header";
 import { priceLabel } from "@/lib/price";
+import { deleteSpot } from "@/app/spots/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +19,7 @@ type SpotDetail = Spot & {
   country: string | null;
   available_start: string | Date | null;
   available_end: string | Date | null;
+  owner_id: string | null;
 };
 
 const fmt = (v: string | Date | null) =>
@@ -74,6 +77,20 @@ export default async function SpotPage({
       <p>
         <strong>{priceLabel(spot)}</strong>
       </p>
+      {spot.owner_id !== null && spot.owner_id === (await getUserId()) && (
+        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <Link href={`/spots/${spot.id}/edit`}>Edit</Link>
+          <form
+            action={async (formData: FormData) => {
+              "use server";
+              await deleteSpot(formData);
+            }}
+          >
+            <input type="hidden" name="id" value={spot.id} />
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      )}
       <div style={{ height: "20rem" }}>
         <SpotMap center={[spot.lat, spot.lng]} zoom={16} spots={[spot]} />
       </div>
