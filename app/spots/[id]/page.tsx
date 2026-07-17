@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sql } from "@/lib/db";
 import SpotMap, { type Spot } from "@/components/SpotMap";
+import Header from "@/components/Header";
 import { priceLabel } from "@/lib/price";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +63,7 @@ export default async function SpotPage({
 
   return (
     <main style={{ maxWidth: "40rem", margin: "0 auto", padding: "1rem" }}>
+      <Header />
       <p>
         <Link href="/">&larr; Back to map</Link>
       </p>

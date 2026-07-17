@@ -1,5 +1,6 @@
 import { sql } from "@/lib/db";
 import SpotMap, { type Spot } from "@/components/SpotMap";
+import Header from "@/components/Header";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +11,17 @@ export default async function Home() {
 
   return (
     <main style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <h1 style={{ margin: "0.5rem 1rem" }}>
-        ParkMe2 &mdash; find and reserve parking
-      </h1>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          margin: "0.5rem 1rem",
+        }}
+      >
+        <h1 style={{ margin: 0 }}>ParkMe2 &mdash; find and reserve parking</h1>
+        <Header />
+      </div>
       <div style={{ flex: 1 }}>
         <SpotMap center={[36.974, -122.03]} zoom={13} spots={spots} />
       </div>
