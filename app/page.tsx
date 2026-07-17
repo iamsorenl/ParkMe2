@@ -1,8 +1,21 @@
-export default function Home() {
+import { sql } from "@/lib/db";
+import SpotMap, { type Spot } from "@/components/SpotMap";
+
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const spots = (await sql`
+    SELECT id, name, addr, locality, price_rate, lat, lng FROM spot ORDER BY name
+  `) as Spot[];
+
   return (
-    <main>
-      <h1>ParkMe2</h1>
-      <p>Find and reserve parking spots. Map coming soon.</p>
+    <main style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <h1 style={{ margin: "0.5rem 1rem" }}>
+        ParkMe2 &mdash; find and reserve parking
+      </h1>
+      <div style={{ flex: 1 }}>
+        <SpotMap center={[36.974, -122.03]} zoom={13} spots={spots} />
+      </div>
     </main>
   );
 }
